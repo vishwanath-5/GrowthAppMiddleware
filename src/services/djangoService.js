@@ -5,6 +5,7 @@ const BASE_URL = "https://growthappbackend.onrender.com";
 
 // 🔐 LOGIN
 const loginUser = async (data) => {
+    console.log("🔥 LOGIN REQUEST:", req.body);
     const res = await axios.post(`${BASE_URL}/token/`, data);
     return res.data;
 };
