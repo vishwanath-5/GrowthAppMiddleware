@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const BASE_URL = "https://growthappbackend.onrender.com";
+const BASE_URL = "https://growthappbackend.onrender.com/api";
 
 
 // 🔐 LOGIN
