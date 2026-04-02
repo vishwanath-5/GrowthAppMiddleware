@@ -6,7 +6,7 @@ const axios = require("axios");
 router.post("/register", async (req, res) => {
     try {
         const response = await axios.post(
-            "http://127.0.0.1:8000/api/users/register/", // ✅ FIXED
+            "https://growthappmiddleware.onrender.com/users/register/", // ✅ FIXED
             req.body
         );
 
@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const response = await axios.post(
-            "http://127.0.0.1:8000/api/token/", // ✅ THIS IS CORRECT
+            "https://growthappmiddleware.onrender.com/token/", // ✅ THIS IS CORRECT
             req.body
         );
 

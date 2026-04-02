@@ -4,55 +4,44 @@ require("dotenv").config();
 
 const app = express();
 
-// 🔥 1. CORS FIRST (VERY IMPORTANT)
+/**
+ * ✅ FINAL CORS CONFIG (ONLY ONCE)
+ * - Allows frontend (Render + local)
+ * - Supports credentials (JWT)
+ */
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["https://growthappfrontend.onrender.com", "http://localhost:5173"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
-// 🔥 2. Handle preflight (OPTIONS)
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-  );
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200); // ✅ preflight success
-  }
-
-  next();
-});
-
-// 🔥 3. Body parser
+// ✅ Body parser
 app.use(express.json());
 
-// 🔥 4. Debug (optional)
+// ✅ Debug middleware (optional but useful)
 app.use((req, res, next) => {
-  console.log("HEADERS RECEIVED:", req.headers);
+  console.log("👉 Request:", req.method, req.url);
+  console.log("👉 Headers:", req.headers);
   next();
 });
 
-// 🔥 5. Routes (AFTER CORS)
+// ✅ Routes
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
-// 🔥 6. Test route
+// ✅ Health check route
 app.get("/", (req, res) => {
-  res.send("API running...");
+  res.send("🚀 Middleware API running...");
 });
 
-// 🔥 7. Start server
+// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🔥 Server running on port ${PORT}`);
 });

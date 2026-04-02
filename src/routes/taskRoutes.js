@@ -17,7 +17,7 @@ const validateHandler = (handler) => {
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/tasks/",
+      "https://growthappmiddleware.onrender.com/tasks/",
       {
         headers: {
           Authorization: `Bearer ${req.token}`,
@@ -41,7 +41,7 @@ router.get("/", authMiddleware, async (req, res) => {
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/tasks/",
+      "https://growthappmiddleware.onrender.com/tasks/",
       req.body,
       {
         headers: {
@@ -61,7 +61,7 @@ router.patch("/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
 
     const response = await axios.patch(
-      `http://127.0.0.1:8000/api/tasks/${id}/`,
+      `https://growthappmiddleware.onrender.com/tasks/${id}/`,
       req.body,
       {
         headers: {
@@ -82,7 +82,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
 
     await axios.delete(
-      `http://127.0.0.1:8000/api/tasks/${id}/`,
+      `https://growthappmiddleware.onrender.com/tasks/${id}/`,
       {
         headers: {
           Authorization: `Bearer ${req.token}`,
