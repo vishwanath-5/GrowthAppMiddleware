@@ -1,6 +1,5 @@
-import express from "express";
-import dotenv from "dotenv";
-import authRoutes from "./routes/authRoutes.js";
+const express = require("express");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -9,10 +8,15 @@ const app = express();
 app.use(express.json());
 
 // Routes
-app.use("/api/auth", authRoutes);
+const authRoutes = require("./routes/authRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
+app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
+
+// Health check
 app.get("/", (req, res) => {
-  res.send("Middleware running...");
+  res.send("Middleware running 🚀");
 });
 
 const PORT = process.env.PORT || 5000;
