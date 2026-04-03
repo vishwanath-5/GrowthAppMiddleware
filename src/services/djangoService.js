@@ -1,19 +1,23 @@
 const axios = require("axios");
 
-const BASE_URL = "https://growthappbackend.onrender.com/api";
+// ✅ Use ENV (VERY IMPORTANT)
+const API = axios.create({
+    baseURL: process.env.DJANGO_BASE_URL,
+});
 
 
 // 🔐 LOGIN
 const loginUser = async (data) => {
-    console.log("🔥 LOGIN REQUEST:", req.body);
-    const res = await axios.post(`${BASE_URL}/token/`, data);
+    console.log("🔥 LOGIN REQUEST:", data);
+
+    const res = await API.post("/token/", data);
     return res.data;
 };
 
 
 // 📝 REGISTER
 const registerUser = async (data) => {
-    const res = await axios.post(`${BASE_URL}/users/register/`, data);
+    const res = await API.post("/users/register/", data);
     return res.data;
 };
 
@@ -21,18 +25,18 @@ const registerUser = async (data) => {
 // 📋 GET TASKS
 const getTasks = async (token) => {
     try {
-        console.log("🔥 SENDING TOKEN TO DJANGO:", token);
+        console.log("🔥 SENDING TOKEN:", token);
 
-        const res = await axios.get(`${BASE_URL}/tasks/`, {
+        const res = await API.get("/tasks/", {
             headers: {
-                Authorization: `Bearer ${token}`, // ✅ GUARANTEED
+                Authorization: `Bearer ${token}`,
             },
         });
 
         return res.data;
 
     } catch (error) {
-        console.error("❌ DJANGO ERROR:", error.response?.data);
+        console.error("❌ DJANGO ERROR:", error.response?.data || error.message);
 
         throw {
             status: error.response?.status || 500,
@@ -43,8 +47,8 @@ const getTasks = async (token) => {
 
 
 // ➕ CREATE TASK
-const createTask = async (token, data) => {
-    const res = await axios.post(`${BASE_URL}/tasks/`, data, {
+const createTask = async (data, token) => {
+    const res = await API.post("/tasks/", data, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -55,8 +59,8 @@ const createTask = async (token, data) => {
 
 
 // ✏️ UPDATE TASK
-const updateTask = async (token, id, data) => {
-    const res = await axios.put(`${BASE_URL}/tasks/${id}/`, data, {
+const updateTask = async (id, data, token) => {
+    const res = await API.patch(`/tasks/${id}/`, data, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -67,8 +71,8 @@ const updateTask = async (token, id, data) => {
 
 
 // ❌ DELETE TASK
-const deleteTask = async (token, id) => {
-    const res = await axios.delete(`${BASE_URL}/tasks/${id}/`, {
+const deleteTask = async (id, token) => {
+    const res = await API.delete(`/tasks/${id}/`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
