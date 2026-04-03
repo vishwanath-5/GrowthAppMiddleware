@@ -3,11 +3,11 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const DJANGO_URL = "https://growthappbackend.onrender.com";
+const FRONTEND_URL = "https://growthappfrontend-1.onrender.com";
 // 🔥 1. CORS FIRST (VERY IMPORTANT)
 app.use(
   cors({
-    origin: DJANGO_URL,
+    origin: FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -16,7 +16,7 @@ app.use(
 
 // 🔥 2. Handle preflight (OPTIONS)
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", DJANGO_URL);
+  res.header("Access-Control-Allow-Origin", FRONTEND_URL);
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.header(
     "Access-Control-Allow-Methods",
