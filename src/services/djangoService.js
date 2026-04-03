@@ -1,7 +1,7 @@
 const axios = require("axios");
 
-const BASE_URL = "http://127.0.0.1:8000/api";
-
+const DJANGO_URL = process.env.DJANGO_URL;
+const BASE_URL = `${DJANGO_URL}/api`;
 
 // 🔐 LOGIN
 const loginUser = async (data) => {

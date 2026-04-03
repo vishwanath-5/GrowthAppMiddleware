@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         const response = await axios.post(
-            "http://127.0.0.1:8000/api/token/", // ✅ THIS IS CORRECT
+            `${DJANGO_URL}/api/token/`, // ✅ THIS IS CORRECT
             req.body
         );
 

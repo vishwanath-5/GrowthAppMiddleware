@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 const taskController = require("../controllers/taskController");
 const authMiddleware = require("../middleware/authMiddleware");
-
+const DJANGO_URL = process.env.DJANGO_URL;
 // 🔐 Middleware check (extra safety)
 const validateHandler = (handler) => {
   if (typeof handler !== "function") {
@@ -17,7 +17,7 @@ const validateHandler = (handler) => {
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const response = await axios.get(
-      "http://127.0.0.1:8000/api/tasks/",
+      `${DJANGO_URL}/api/tasks/`,
       {
         headers: {
           Authorization: `Bearer ${req.token}`,
@@ -41,7 +41,7 @@ router.get("/", authMiddleware, async (req, res) => {
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/tasks/",
+      `${DJANGO_URL}/api/tasks/`,
       req.body,
       {
         headers: {
@@ -61,7 +61,7 @@ router.patch("/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
 
     const response = await axios.patch(
-      `http://127.0.0.1:8000/api/tasks/${id}/`,
+      `${DJANGO_URL}/api/tasks/${id}/`,
       req.body,
       {
         headers: {
@@ -82,7 +82,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     const { id } = req.params;
 
     await axios.delete(
-      `http://127.0.0.1:8000/api/tasks/${id}/`,
+      `${DJANGO_URL}/api/tasks/${id}/`,
       {
         headers: {
           Authorization: `Bearer ${req.token}`,
