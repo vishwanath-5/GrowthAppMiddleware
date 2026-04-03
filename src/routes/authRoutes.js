@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-
+const DJANGO_URL = process.env.DJANGO_URL;
 // ✅ REGISTER
 router.post("/register", async (req, res) => {
     try {
         const response = await axios.post(
-            "http://127.0.0.1:8000/api/users/register/", // ✅ FIXED
+            `${DJANGO_URL}/api/users/register/`,
             req.body
         );
 
