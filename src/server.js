@@ -3,7 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const DJANGO_URL = "https://growthappfrontend-1.onrender.com";
+const DJANGO_URL = "https://growthappbackend.onrender.com";
 // 🔥 1. CORS FIRST (VERY IMPORTANT)
 app.use(
   cors({
