@@ -1,21 +1,27 @@
-const djangoService = require("../services/djangoService");
+import djangoAPI from "../utils/appClient.js";
 
-// Login
-exports.login = async (req, res) => {
+// 🔐 LOGIN
+export const login = async (req, res) => {
     try {
-        const data = await djangoService.loginUser(req.body);
-        res.json(data);
+        const response = await djangoAPI.post("/token/", req.body);
+
+        res.json(response.data);
     } catch (error) {
-        res.status(400).json({ error: error.response?.data || "Login failed" });
+        res.status(500).json({
+            error: error.response?.data || "Login failed",
+        });
     }
 };
 
-// Register
-exports.register = async (req, res) => {
+// 📝 REGISTER
+export const register = async (req, res) => {
     try {
-        const data = await djangoService.registerUser(req.body);
-        res.json(data);
+        const response = await djangoAPI.post("/users/register/", req.body);
+
+        res.json(response.data);
     } catch (error) {
-        res.status(400).json({ error: error.response?.data || "Register failed" });
+        res.status(500).json({
+            error: error.response?.data || "Register failed",
+        });
     }
 };
